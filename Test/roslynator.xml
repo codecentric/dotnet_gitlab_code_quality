@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Roslynator>
+  <CodeAnalysis>
+    <Projects>
+      <Project Name="Example.Test" FilePath="C:\dev\example\Example.Test.csproj">
+        <Diagnostics>
+          <Diagnostic Id="CA1829">
+            <Severity>Info</Severity>
+            <Message>Use Length/Count property instead of Count() when available</Message>
+            <FilePath>C:\dev\example\TestFirebirdImport.cs</FilePath>
+            <Location Line="80" Character="9" />
+            <Location Line="80" Character="9" />
+          </Diagnostic>
+          <Diagnostic Id="CA1829">
+            <Severity>Info</Severity>
+            <Message>Use Length/Count property instead of Count() when available</Message>
+            <FilePath>C:\dev\example\TestFirebirdImport.cs</FilePath>
+            <Location Line="81" Character="9" />
+          </Diagnostic>
+          <Diagnostic Id="CA1829">
+            <Severity>Info</Severity>
+            <Message>Use Length/Count property instead of Count() when available</Message>
+            <FilePath>C:\dev\example\TestFirebirdImport.cs</FilePath>
+            <Location Line="83" Character="9" />
+          </Diagnostic>
+        </Diagnostics>
+      </Project>
+    </Projects>
+  </CodeAnalysis>
+</Roslynator>
