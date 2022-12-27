@@ -19,4 +19,4 @@ jobs:
         run: dotnet test --no-restore --verbosity normal
       - name: Nuget
         if: startsWith(github.ref, 'refs/heads/main')
-        run: nuget push **\release\**\CodeQualityToGitlab.*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+        run: nuget push CodeQualityToGitlab\nupkg\CodeQualityToGitlab.*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
