@@ -4,7 +4,7 @@ namespace CodeQualityToGitlab;
 
 internal static class Program
 {
-    private static async Task Main(string[] args)
+    private static async Task<int> Main(string[] args)
     {
         var sourceArgument = new Argument<FileInfo>(
             name: "source",
@@ -57,6 +57,6 @@ internal static class Program
         rootCommand.Add(sarifToCodeQuality);
         rootCommand.Add(mergeCodeQuality);
 
-        await rootCommand.InvokeAsync(args);
+        return await rootCommand.InvokeAsync(args);
     }
 }
