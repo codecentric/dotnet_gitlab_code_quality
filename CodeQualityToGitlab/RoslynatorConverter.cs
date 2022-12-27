@@ -1,10 +1,9 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace CodeQualityToGitlab;
 
-public class RoslynatorConverter
+public static class RoslynatorConverter
 {
     public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string pathRoot)
     {
@@ -36,7 +35,6 @@ public class RoslynatorConverter
                 result.Add(cqr);
             }
         }
-
         Common.WriteToDisk(target, result);
     }
 

@@ -1,52 +1,62 @@
 using System.CommandLine;
-using System.Text.Json;
 
 namespace CodeQualityToGitlab;
 
-// three commands:
-// 1. Roslynator -> cqi
-// 2. ms-style -> cqi
-// 3 merge N -> cqi
-
-// ReSharper disable once UnusedType.Global
-class Program
+internal static class Program
 {
-    
-    static async Task Main(string[] args)
+    private static async Task Main(string[] args)
     {
+        var sourceArgument = new Argument<FileInfo>(
+            name: "source",
+            description: "The file to convert"
+            );
+
+        var targetArgument = new Argument<FileInfo>(
+            name: "target",
+            description: "The target file"
+        );
+        
+        var rootPathArgument = new Argument<string>(
+            name: "root",
+            description: "The name root of the repository. Gitlab requires Code Quality issues to contain paths relative to the repository, " +
+                         "but the tools report them as absolute file paths. " +
+                         "Everything given in with this option will be removed. E.g. root is 'c:/dev' and the file name is something like 'c:/dev/myrepo/file.cs' it will transformed to 'myrepo/file.cs' "
+        );
+        
         var rootCommand = new RootCommand("Tool to convert Dotnet-Formats to Gitlab code quality");
-        var roslynatorToCodeQuality = new Command("rosylnator", "Convert Rosylnator file to Code Quality issue");
-        var sarifToCodeQuality = new Command("sarif", "Convert Sarif files to Code Quality issue");
-        var mergeCodeQuality = new Command("merge-codequality", "Merge multiple code quality files into one");
+        var roslynatorToCodeQuality = new Command("roslynator", "Convert Roslynator file to Code Quality issue")
+        {
+            sourceArgument,
+            targetArgument,
+            rootPathArgument
+        };
+        
+        var sarifToCodeQuality = new Command("sarif", "Convert Sarif files to Code Quality issue")
+        {
+            sourceArgument,
+            targetArgument,
+            rootPathArgument
+        };
+        
+        var sourcesArgument = new Argument<FileInfo[]>(
+            name: "sources",
+            description: "The files to merge"
+        );
+        
+        var mergeCodeQuality = new Command("merge", "Merge multiple code quality files into one")    
+        {
+            targetArgument,
+            sourcesArgument
+        };
+        
+        roslynatorToCodeQuality.SetHandler(RoslynatorConverter.ConvertToCodeQuality, sourceArgument, targetArgument, rootPathArgument);
+        sarifToCodeQuality.SetHandler(SarifConverter.ConvertToCodeQuality, sourceArgument, targetArgument, rootPathArgument);
+        mergeCodeQuality.SetHandler(Merger.Merge, sourcesArgument, targetArgument);
         
         rootCommand.Add(roslynatorToCodeQuality);
         rootCommand.Add(sarifToCodeQuality);
         rootCommand.Add(mergeCodeQuality);
 
-        rootCommand.SetHandler(() =>
-        {
-            Console.WriteLine("Hello world!");
-        });
-
         await rootCommand.InvokeAsync(args);
-        
-        //Environment.CurrentDirectory + Path.DirectorySeparatorChar
     }
-    
-    /// <param name="source">Source Roslynator file</param>
-    /// <param name="target">Code Quality target file</param>
-    // ReSharper disable once UnusedMember.Local
-    static void Main2(FileInfo source, FileInfo target)
-    {
-        Console.WriteLine($"source: {source}");
-        Console.WriteLine($"target: {target}");
-
-        if (!source.Exists)
-        {
-            throw new ArgumentOutOfRangeException($"{source} does not exist");
-        }
-    }
-
-   
 }
-

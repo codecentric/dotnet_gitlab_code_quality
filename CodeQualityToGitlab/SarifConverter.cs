@@ -1,7 +1,6 @@
-﻿using Serilog;
+﻿namespace CodeQualityToGitlab;
 
-namespace CodeQualityToGitlab;
-
+using Serilog;
 using Microsoft.CodeAnalysis.Sarif.Readers;
 using Microsoft.CodeAnalysis.Sarif.VersionOne;
 using Newtonsoft.Json;

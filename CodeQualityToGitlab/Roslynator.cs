@@ -1,6 +1,6 @@
-﻿using System.Xml.Serialization;
+﻿namespace CodeQualityToGitlab;
 
-namespace CodeQualityToGitlab;
+using System.Xml.Serialization;
 
 [XmlRoot(ElementName = "Diagnostic")]
 public class Diagnostic

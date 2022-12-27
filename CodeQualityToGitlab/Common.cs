@@ -29,5 +29,6 @@ internal static class Common
         using var fileStream = File.Create(target.FullName);
         using var utf8JsonWriter = new Utf8JsonWriter(fileStream);
         JsonSerializer.Serialize(utf8JsonWriter, result, options);
+        Console.WriteLine($"Result written to: {target.FullName}");
     }
 }
