@@ -62,8 +62,16 @@ code_quality_job:
 
 ## How to install?
 
+For interactive usage
+
+```shell
+dotnet tool install --global CodeQualityToGitlab --version 0.1.1
+```
+
+for pipeline use a manifest:
+
+
 ## How to contribute?
 
-Convert .Net code quality reports into gitlab code quality reports
-
+Make a PR in this repo.
 
