@@ -15,18 +15,18 @@ I assume that you have your Project at c:\dev\myproject and you have build it, s
 
 Now we want to generate a Gitlab compatible file:
 ```shell
-dotnet tool run codeQualityToGitlab sarif codeanalysis.sarif.json targetfile.json c:/dev
+dotnet tool run cq sarif codeanalysis.sarif.json targetfile.json c:/dev
 ```
 
 For Roslynator:
 ```shell
-dotnet tool run codeQualityToGitlab roslynator roslynator.xml targetfile.json c:/dev
+dotnet tool run cq roslynator roslynator.xml targetfile.json c:/dev
 ```
 
 For merging:
 
 ```shell
-dotnet tool run merge target.json source1.json source2.json
+dotnet tool run cq merge target.json source1.json source2.json
 ```
 
 Note the third argument, it is used to report only the path relative to the repository, not the full local path.
@@ -42,7 +42,7 @@ code_quality_job:
   script:
     - 'dotnet build ./MySln.sln'
     - 'dotnet tool run roslynator analyze ./MySln.sln -o roslynator.xml  || true' 
-    - 'dotnet ./Cq/CodeQualityConverter.dll --source roslynator.xml --target gl-code-quality-report.json c:\dev'
+    - 'dotnet tool run cq roslynator.xml gl-code-quality-report.json c:\dev'
   artifacts:
     paths:
       - roslynator.xml
