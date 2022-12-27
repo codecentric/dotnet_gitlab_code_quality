@@ -14,7 +14,7 @@ public class TestSarif
         var source = new FileInfo("codeanalysis.sarif.json" );
         var target = new FileInfo(Path.GetTempFileName());
 
-        SarifConverter.ConvertToCodeQuality(source, target, "C:\\dev" + Path.DirectorySeparatorChar);
+        SarifConverter.ConvertToCodeQuality(source, target, $"C:{Path.DirectorySeparatorChar}dev" + Path.DirectorySeparatorChar);
         
         var options = new JsonSerializerOptions
         {
