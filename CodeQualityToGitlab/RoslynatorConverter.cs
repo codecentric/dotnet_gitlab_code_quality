@@ -58,6 +58,7 @@ public static class RoslynatorConverter
             "Info" => Severity.info,
             "Warning" => Severity.major,
             "Error" => Severity.critical,
+            "Hidden" => Severity.minor,
             _ => throw new ArgumentOutOfRangeException(diagnosticSeverity, $"unknown: {diagnosticSeverity}")
         };
     }
