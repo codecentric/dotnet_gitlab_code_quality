@@ -9,5 +9,16 @@
         "begin": 12
       }
     }
+  },
+  {
+    "description": "CUSTOM",
+    "fingerprint": "10E2DA0085F71F06D782272E0BE393A2",
+    "severity": "minor",
+    "location": {
+      "path": "dev/example\\Reader.cs",
+      "lines": {
+        "begin": 12
+      }
+    }
   }
 ]

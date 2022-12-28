@@ -5,8 +5,9 @@ namespace CodeQualityToGitlab;
 
 public static class Merger
 {
-    public static void Merge(FileInfo[] sources, FileInfo target)
+    public static void Merge(FileInfo[] sources, FileInfo target, bool bumpToMajor)
     {
+        Console.WriteLine($"bump to major is: {bumpToMajor}");
         var result = new List<CodeQuality>();
         var options = new JsonSerializerOptions
         {
@@ -39,6 +40,17 @@ public static class Merger
             {
                 Console.WriteLine($"Error while deserializing file {source.FullName}");
                 throw;
+            }
+        }
+
+        result = result.DistinctBy(x => x.Fingerprint).ToList();
+        
+        if (bumpToMajor)
+        {
+            foreach (var cqr in result
+                         .Where(cqr => cqr.Severity is Severity.minor or Severity.info))
+            {
+                cqr.Severity = Severity.major;
             }
         }
         

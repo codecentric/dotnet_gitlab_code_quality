@@ -15,6 +15,9 @@ internal static class Program
             name: "target",
             description: "The target file"
         );
+
+        var bumpToMajorOption = new Option<bool>(name: "--all_major",
+            "if true all info and minor issues are promoted to major for Gitlab");
         
         var rootPathArgument = new Argument<string?>(
             name: "root",
@@ -47,12 +50,13 @@ internal static class Program
         var mergeCodeQuality = new Command("merge", "Merge multiple code quality files into one")    
         {
             targetArgument,
-            sourcesArgument
+            sourcesArgument,
+            bumpToMajorOption
         };
         
         roslynatorToCodeQuality.SetHandler(RoslynatorConverter.ConvertToCodeQuality, sourceArgument, targetArgument, rootPathArgument);
         sarifToCodeQuality.SetHandler(SarifConverter.ConvertToCodeQuality, sourceArgument, targetArgument, rootPathArgument);
-        mergeCodeQuality.SetHandler(Merger.Merge, sourcesArgument, targetArgument);
+        mergeCodeQuality.SetHandler(Merger.Merge, sourcesArgument, targetArgument, bumpToMajorOption);
         
         rootCommand.Add(roslynatorToCodeQuality);
         rootCommand.Add(sarifToCodeQuality);
