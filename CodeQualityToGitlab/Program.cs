@@ -1,4 +1,5 @@
 using System.CommandLine;
+using Serilog;
 
 namespace CodeQualityToGitlab;
 
@@ -6,6 +7,10 @@ internal static class Program
 {
     private static async Task<int> Main(string[] args)
     {
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .CreateLogger();
+        
         var sourceArgument = new Argument<FileInfo>(
             name: "source",
             description: "The file to convert"
@@ -54,13 +59,35 @@ internal static class Program
             bumpToMajorOption
         };
         
+        var sourceGlobArgument = new Argument<string>(
+            name: "sarifGlob",
+            description: "Glob pattern for the sarif files",
+            getDefaultValue: () => "**/*.sarif.json"
+        );
+        
+        var sourceRoslynatorArgument = new Argument<string>(
+            name: "roslynatorGlob",
+            description: "Glob pattern for the roslynator files",
+            getDefaultValue: () => "**/roslynator.xml"
+        );
+        
+        var transformCodeQuality = new Command("transform", "Transforms files from a glob mapping and merges them to one file")    
+        {
+            sourceGlobArgument,
+            sourceRoslynatorArgument,
+            targetArgument,
+            rootPathArgument,
+            bumpToMajorOption
+        };
+        
         roslynatorToCodeQuality.SetHandler(RoslynatorConverter.ConvertToCodeQuality, sourceArgument, targetArgument, rootPathArgument);
         sarifToCodeQuality.SetHandler(SarifConverter.ConvertToCodeQuality, sourceArgument, targetArgument, rootPathArgument);
         mergeCodeQuality.SetHandler(Merger.Merge, sourcesArgument, targetArgument, bumpToMajorOption);
-        
+        transformCodeQuality.SetHandler(Transform.TransformAll, sourceGlobArgument, sourceRoslynatorArgument, targetArgument,rootPathArgument, bumpToMajorOption);
         rootCommand.Add(roslynatorToCodeQuality);
         rootCommand.Add(sarifToCodeQuality);
         rootCommand.Add(mergeCodeQuality);
+        rootCommand.Add(transformCodeQuality);
 
         return await rootCommand.InvokeAsync(args);
     }

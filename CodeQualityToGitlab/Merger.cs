@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Serilog;
 
 namespace CodeQualityToGitlab;
 
@@ -7,7 +8,7 @@ public static class Merger
 {
     public static void Merge(FileInfo[] sources, FileInfo target, bool bumpToMajor)
     {
-        Console.WriteLine($"bump to major is: {bumpToMajor}");
+        Log.Information("bump to major is: {BumpToMajor}", bumpToMajor);
         var result = new List<CodeQuality>();
         var options = new JsonSerializerOptions
         {
@@ -36,9 +37,9 @@ public static class Merger
                 }
                 result.AddRange(data);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine($"Error while deserializing file {source.FullName}");
+                Log.Error(e, "Error while deserializing file {SourceFullName}", source.FullName);
                 throw;
             }
         }

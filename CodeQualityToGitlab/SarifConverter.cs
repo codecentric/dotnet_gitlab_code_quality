@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 public static class SarifConverter
 {
-    public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string? pathRoot)
+    public static List<CodeQuality> ConvertToCodeQualityRaw(FileInfo source, string? pathRoot)
     {
         Log.Warning("We currently assume that the given Sarif v1.0, Sarif 2.0 is not supported");
         var logContents = File.ReadAllText(source.FullName);
@@ -38,7 +38,12 @@ public static class SarifConverter
             
             cqrs.Add(cqr);
         }
-        
+
+        return cqrs;
+    }
+    public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string? pathRoot)
+    {
+        var cqrs = ConvertToCodeQualityRaw(source, pathRoot);
         Common.WriteToDisk(target, cqrs);
     }
 

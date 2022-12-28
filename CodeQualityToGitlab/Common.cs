@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Serilog;
 
 namespace CodeQualityToGitlab;
 
@@ -15,7 +16,7 @@ internal static class Common
         return Convert.ToHexString(hashBytes);
     }
 
-    public static void WriteToDisk(FileInfo target, List<CodeQuality> result)
+    public static void WriteToDisk(FileInfo target, IEnumerable<CodeQuality> result)
     {
         var options = new JsonSerializerOptions
         {
@@ -29,6 +30,6 @@ internal static class Common
         using var fileStream = File.Create(target.FullName);
         using var utf8JsonWriter = new Utf8JsonWriter(fileStream);
         JsonSerializer.Serialize(utf8JsonWriter, result, options);
-        Console.WriteLine($"Result written to: {target.FullName}");
+        Log.Information("Result written to: {TargetFullName}", target.FullName);
     }
 }

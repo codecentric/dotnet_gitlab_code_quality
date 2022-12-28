@@ -1,11 +1,12 @@
 ﻿using System.Text.Json;
 using System.Xml.Serialization;
+using Serilog;
 
 namespace CodeQualityToGitlab;
 
 public static class RoslynatorConverter
 {
-    public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string? pathRoot)
+    public static List<CodeQuality> ConvertToCodeQualityRaw(FileInfo source, string? pathRoot)
     {
         var serializer =
             new XmlSerializer(typeof(Roslynator));
@@ -15,7 +16,7 @@ public static class RoslynatorConverter
         var roslynator = (Roslynator)(serializer.Deserialize(reader) ?? throw new ArgumentException("no data"));
         foreach (var project in roslynator.CodeAnalysis.Projects.Project)
         {
-            Console.WriteLine($"Working on {project.Name}");
+            Log.Information("Working on {ProjectName}", project.Name);
 
             foreach (var diagnostic in project.Diagnostics.Diagnostic)
             {
@@ -35,14 +36,27 @@ public static class RoslynatorConverter
                 result.Add(cqr);
             }
         }
-        Common.WriteToDisk(target, result);
+
+        return result;
+    }
+    
+
+    public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string? pathRoot)
+    {
+        var cqrs = ConvertToCodeQualityRaw(source, pathRoot);
+        Common.WriteToDisk(target, cqrs);
     }
 
     private static string GetPath(Diagnostic diagnostic, Project project, string? pathRoot)
     {
         var path = diagnostic.FilePath ?? project.FilePath;
-        var rv = path.Replace(pathRoot ?? "", "");
         
+        if (string.IsNullOrWhiteSpace(pathRoot))
+        {
+            return path;
+        }
+        
+        var rv = path.Replace(pathRoot, "");
         return rv;
     }
 

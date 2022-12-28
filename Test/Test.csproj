@@ -51,6 +51,14 @@
       <Content Include="codeanalysis.sarif2.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+        <None Remove="codeanalysis2.sarif.json" />
+        <Content Include="codeanalysis2.sarif.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Nested\codeanalysis2.sarif.json" />
+        <Content Include="Nested\codeanalysis2.sarif.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>
