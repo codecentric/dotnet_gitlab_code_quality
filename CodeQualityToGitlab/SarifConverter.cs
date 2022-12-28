@@ -7,11 +7,11 @@ using Newtonsoft.Json;
 
 public static class SarifConverter
 {
-    public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string pathRoot)
+    public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string? pathRoot)
     {
         Log.Warning("We currently assume that the given Sarif v1.0, Sarif 2.0 is not supported");
         var logContents = File.ReadAllText(source.FullName);
-        var uri = new Uri(pathRoot);
+
         var settings = new JsonSerializerSettings
         {
             ContractResolver = SarifContractResolverVersionOne.Instance
@@ -30,7 +30,7 @@ public static class SarifConverter
                 Severity = GetSeverity(result.Level),
                 Location = new LocationCq
                 {
-                    Path = uri.MakeRelativeUri(begin.ResultFile.Uri).ToString().Replace("//", "\\"),
+                    Path = GetPath(pathRoot, begin),
                     Lines = new Lines { Begin = begin.ResultFile.Region.StartLine }
                 },
                 Fingerprint = Common.GetHash($"{result.RuleId}|{begin.ResultFile.Uri}|{begin.ResultFile.Region.StartLine}")
@@ -40,6 +40,16 @@ public static class SarifConverter
         }
         
         Common.WriteToDisk(target, cqrs);
+    }
+
+    private static string GetPath(string? pathRoot, LocationVersionOne begin)
+    {
+        if (string.IsNullOrWhiteSpace(pathRoot))
+        {
+            return begin.ResultFile.Uri.LocalPath.Replace("//", "\\");
+        }
+        var uri = new Uri(pathRoot);
+        return uri.MakeRelativeUri(begin.ResultFile.Uri).ToString().Replace("//", "\\");
     }
 
     private static Severity GetSeverity(ResultLevelVersionOne resultLevel)

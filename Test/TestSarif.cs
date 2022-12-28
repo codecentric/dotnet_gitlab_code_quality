@@ -2,7 +2,6 @@
 using System.Text.Json.Serialization;
 using CodeQualityToGitlab;
 using FluentAssertions;
-using FluentAssertions.Execution;
 
 namespace Test;
 
@@ -35,6 +34,34 @@ public class TestSarif
         codeQuality.Severity.Should().Be(Severity.major);
         codeQuality.Location.Path.Should().Be("example\\Reader.cs");
         codeQuality.Location.Lines.Begin.Should().Be(12);
+        
+    }
+    
+    [Fact]
+    public void TestSarifWorks2()
+    {
+        var source = new FileInfo("codeanalysis.sarif2.json" );
+        var target = new FileInfo(Path.GetTempFileName());
+
+        SarifConverter.ConvertToCodeQuality(source, target, null);
+        
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
+            Converters ={
+                new JsonStringEnumConverter()
+            }
+        };
+
+        using var r = new StreamReader(target.FullName);
+        var json = r.ReadToEnd();
+        var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
+        
+        result.Should().HaveCount(7);
+        var codeQuality = result!.First();
+        codeQuality.Location.Path.Should().Be("/builds/christian.sauer/net_examle/ClassLibrary1/Class1.cs");
+        codeQuality.Location.Lines.Begin.Should().Be(26);
         
     }
 }

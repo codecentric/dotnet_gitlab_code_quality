@@ -43,6 +43,10 @@
       <Content Include="gl-quality2.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="codeanalysis.sarif2.json" />
+      <Content Include="codeanalysis.sarif2.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
