@@ -5,7 +5,7 @@ namespace CodeQualityToGitlab;
 
 public static class RoslynatorConverter
 {
-    public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string pathRoot)
+    public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string? pathRoot)
     {
         var serializer =
             new XmlSerializer(typeof(Roslynator));
@@ -38,10 +38,10 @@ public static class RoslynatorConverter
         Common.WriteToDisk(target, result);
     }
 
-    private static string GetPath(Diagnostic diagnostic, Project project, string pathRoot)
+    private static string GetPath(Diagnostic diagnostic, Project project, string? pathRoot)
     {
         var path = diagnostic.FilePath ?? project.FilePath;
-        var rv = path.Replace(pathRoot, "");
+        var rv = path.Replace(pathRoot ?? "", "");
         
         return rv;
     }
