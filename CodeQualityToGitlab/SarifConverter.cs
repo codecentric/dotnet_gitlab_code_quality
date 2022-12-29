@@ -22,22 +22,28 @@ public static class SarifConverter
         var cqrs = new List<CodeQuality>();
         foreach (var result in log.Runs.SelectMany(x => x.Results))
         {
-            var begin = result.Locations.First();
-            
-            var cqr = new CodeQuality
-            {
-                Description = $"{result.RuleId}: {result.Message}",
-                Severity = GetSeverity(result.Level),
-                Location = new LocationCq
+            var begin = result.Locations?.FirstOrDefault();
+
+                if (begin == null)
                 {
-                    Path = GetPath(pathRoot, begin),
-                    Lines = new Lines { Begin = begin.ResultFile.Region.StartLine }
-                },
-                Fingerprint = Common.GetHash($"{result.RuleId}|{begin.ResultFile.Uri}|{begin.ResultFile.Region.StartLine}")
-            };
+                    Log.Warning("An issue has no location, skipping: {result}", result.Message);
+                    continue;
+                }
+                
+                var cqr = new CodeQuality
+                {
+                    Description = $"{result.RuleId}: {result.Message}",
+                    Severity = GetSeverity(result.Level),
+                    Location = new LocationCq
+                    {
+                        Path = GetPath(pathRoot, begin),
+                        Lines = new Lines { Begin = begin.ResultFile.Region.StartLine }
+                    },
+                    Fingerprint = Common.GetHash($"{result.RuleId}|{begin.ResultFile.Uri}|{begin.ResultFile.Region.StartLine}")
+                };
             
-            cqrs.Add(cqr);
-        }
+                cqrs.Add(cqr);
+            }
 
         return cqrs;
     }
