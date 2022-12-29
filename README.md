@@ -30,8 +30,17 @@ dotnet tool run cq merge target.json source1.json source2.json
 ```
 
 Note the third argument, it is used to report only the path relative to the repository, not the full local path.
-Now you can upload your file in Gitlab und you SHOULD be able to see it in the merge view 
+Now you can upload your file in Gitlab und you SHOULD be able to see it in the merge view
 Gotcha: Gitlab compares issues to the target of the merge. When there are no issues in the target branch, it will not display anything. So please run this tool on your main branch first then open a merge request to see it in the Gitlab UI.
+
+All in one:
+
+```shell
+dotnet tool run cq transform  '**/*.sarif.json'  '**/roslynator.xml' gl-code-quality-report.json
+```
+
+This basically globs for the relevant files and merges them.
+
 
 Gitlab Pipeline should look like this:
 
