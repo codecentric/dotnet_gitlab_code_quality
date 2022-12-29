@@ -29,21 +29,27 @@ public static class SarifConverter
                     Log.Warning("An issue has no location, skipping: {result}", result.Message);
                     continue;
                 }
-                
-                var cqr = new CodeQuality
+
+                try
                 {
-                    Description = $"{result.RuleId}: {result.Message}",
-                    Severity = GetSeverity(result.Level),
-                    Location = new LocationCq
+                    var cqr = new CodeQuality
                     {
-                        Path = GetPath(pathRoot, begin),
-                        Lines = new Lines { Begin = begin.ResultFile.Region.StartLine }
-                    },
-                    Fingerprint = Common.GetHash($"{result.RuleId}|{begin.ResultFile.Uri}|{begin.ResultFile.Region.StartLine}")
-                };
-            
-                cqrs.Add(cqr);
-            }
+                        Description = $"{result.RuleId}: {result.Message}",
+                        Severity = GetSeverity(result.Level),
+                        Location = new LocationCq
+                        {
+                            Path = GetPath(pathRoot, begin),
+                            Lines = new Lines { Begin = begin.ResultFile.Region.StartLine }
+                        },
+                        Fingerprint = Common.GetHash($"{result.RuleId}|{begin.ResultFile.Uri}|{begin.ResultFile.Region.StartLine}")
+                    };
+                    cqrs.Add(cqr);
+                }
+                catch (Exception e)
+                {
+                   Log.Error(e, "Could not convert {@result}, skipping", result);
+                }
+        }
 
         return cqrs;
     }
