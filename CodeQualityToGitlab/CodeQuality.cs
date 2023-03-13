@@ -1,4 +1,6 @@
-﻿namespace CodeQualityToGitlab;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CodeQualityToGitlab;
 
 public class CodeQuality
 {
@@ -19,6 +21,7 @@ public class Lines
     public required int Begin { get; set; }
 }
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public enum Severity
 {
     info,

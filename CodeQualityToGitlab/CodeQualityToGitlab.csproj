@@ -8,7 +8,7 @@
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>cq</ToolCommandName>
         <PackageOutputPath>./nupkg</PackageOutputPath>
-        <Version>0.4.0</Version>
+        <Version>0.4.1</Version>
         <Company>codecentric</Company>
         <Copyright>(c) codecentric</Copyright>
         <PackageProjectUrl>https://github.com/codecentric/dotnet_gitlab_code_quality</PackageProjectUrl>
@@ -19,6 +19,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>

@@ -26,7 +26,7 @@ public static class SarifConverter
 
                 if (begin == null)
                 {
-                    Log.Warning("An issue has no location, skipping: {result}", result.Message);
+                    Log.Warning("An issue has no location, skipping: {Result}", result.Message);
                     continue;
                 }
 
@@ -47,7 +47,7 @@ public static class SarifConverter
                 }
                 catch (Exception e)
                 {
-                   Log.Error(e, "Could not convert {@result}, skipping", result);
+                   Log.Error(e, "Could not convert {@Result}, skipping", result);
                 }
         }
 

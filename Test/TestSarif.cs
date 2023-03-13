@@ -30,7 +30,7 @@ public class TestSarif
 
         result.Should().HaveCount(1);
         var codeQuality = result!.First();
-        codeQuality!.Description.Should().Be("CS8618: Non-nullable property 'Name' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.");
+        codeQuality.Description.Should().Be("CS8618: Non-nullable property 'Name' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.");
         codeQuality.Severity.Should().Be(Severity.major);
         codeQuality.Location.Path.Should().Be("example\\Reader.cs");
         codeQuality.Location.Lines.Begin.Should().Be(12);
