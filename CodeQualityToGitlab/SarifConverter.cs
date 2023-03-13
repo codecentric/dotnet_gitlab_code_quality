@@ -18,7 +18,7 @@ public static class SarifConverter
         };
 
         var log = JsonConvert.DeserializeObject<SarifLogVersionOne>(logContents, settings);
-        
+
         var cqrs = new List<CodeQuality>();
         foreach (var result in log.Runs.SelectMany(x => x.Results))
         {
@@ -61,6 +61,11 @@ public static class SarifConverter
 
     private static string GetPath(string? pathRoot, LocationVersionOne begin)
     {
+        if (!begin.ResultFile.Uri.IsAbsoluteUri)
+        {
+            return begin.ResultFile.Uri.ToString();
+        }
+
         if (string.IsNullOrWhiteSpace(pathRoot))
         {
             return begin.ResultFile.Uri.LocalPath.Replace("//", "\\");
@@ -75,7 +80,7 @@ public static class SarifConverter
         {
             ResultLevelVersionOne.NotApplicable => Severity.minor,
             ResultLevelVersionOne.Pass => Severity.minor,
-            ResultLevelVersionOne.Note => Severity.minor,           
+            ResultLevelVersionOne.Note => Severity.minor,
             ResultLevelVersionOne.Warning => Severity.major,
             ResultLevelVersionOne.Default => Severity.major,
             ResultLevelVersionOne.Error => Severity.blocker,

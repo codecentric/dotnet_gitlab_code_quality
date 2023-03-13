@@ -13,7 +13,7 @@ public class TestTransform
         var target = new FileInfo(Path.GetTempFileName());
 
         Transform.TransformAll("**/**.sarif.json", "**/*roslynator.xml", target,  null,true);
-        
+
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -26,7 +26,7 @@ public class TestTransform
         using var r = new StreamReader(target.FullName);
         var json = r.ReadToEnd();
         var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
-        
+
         result.Should().HaveCount(7);
 
     }

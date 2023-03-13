@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Compiler",
+        "version": "4.4.0.0",
+        "fileVersion": "4.4.0-6.22565.8 (53091686)",
+        "semanticVersion": "4.4.0",
+        "language": ""
+      },
+      "results": [
+        {
+          "ruleId": "CS1998",
+          "level": "warning",
+          "message": "This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "Microsoft.NET.Sdk.Razor.SourceGenerators/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views_Apaleo_TgcBooking_cshtml.g.cs",
+                "region": {
+                  "startLine": 217,
+                  "startColumn": 234,
+                  "endLine": 217,
+                  "endColumn": 236
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }],
+      "rules": {
+        "CS0162": {
+          "id": "CS0162",
+          "shortDescription": "Unreachable code detected",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0162)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS0168": {
+          "id": "CS0168",
+          "shortDescription": "Variable is declared but never used",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0168)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "IDE0036": {
+          "id": "IDE0036",
+          "shortDescription": "Order modifiers",
+          "defaultLevel": "warning",
+          "helpUri": "https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0036",
+          "properties": {
+            "category": "Style",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnforceOnBuild_HighlyRecommended"
+            ]
+          }
+        },
+        "IDE0055": {
+          "id": "IDE0055",
+          "shortDescription": "Fix formatting",
+          "defaultLevel": "warning",
+          "helpUri": "https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0055",
+          "properties": {
+            "category": "Style",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnforceOnBuild_HighlyRecommended"
+            ]
+          }
+        },
+        "IDE0059": {
+          "id": "IDE0059",
+          "shortDescription": "Unnecessary assignment of a value",
+          "fullDescription": "Avoid unnecessary value assignments in your code, as these likely indicate redundant value computations. If the value computation is not redundant and you intend to retain the assignment, then change the assignment target to a local variable whose name starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.",
+          "defaultLevel": "warning",
+          "helpUri": "https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0059",
+          "properties": {
+            "category": "Style",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnforceOnBuild_HighlyRecommended",
+              "Unnecessary"
+            ]
+          }
+        },
+        "IDE0100": {
+          "id": "IDE0100",
+          "shortDescription": "Remove redundant equality",
+          "defaultLevel": "warning",
+          "helpUri": "https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0100",
+          "properties": {
+            "category": "Style",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnforceOnBuild_Recommended"
+            ]
+          }
+        },
+        "IDE0160": {
+          "id": "IDE0160",
+          "shortDescription": "Convert to block scoped namespace",
+          "defaultLevel": "warning",
+          "helpUri": "https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0160",
+          "properties": {
+            "category": "Style",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnforceOnBuild_HighlyRecommended"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
