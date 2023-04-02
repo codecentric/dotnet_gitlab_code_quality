@@ -27,7 +27,7 @@ public class TestTransform
         var json = r.ReadToEnd();
         var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
 
-        result.Should().HaveCount(7);
+        result.Should().HaveCount(8);
 
     }
 }
