@@ -92,4 +92,29 @@ public class TestSarif
         codeQuality.Location.Lines.Begin.Should().Be(217);
 
     }
+
+    [Fact]
+    public void TestCrashWorks()
+    {
+        var source = new FileInfo("crash.sarif.json" );
+        var target = new FileInfo(Path.GetTempFileName());
+
+        SarifConverter.ConvertToCodeQuality(source, target, null);
+
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
+            Converters ={
+                new JsonStringEnumConverter()
+            }
+        };
+
+        using var r = new StreamReader(target.FullName);
+        var json = r.ReadToEnd();
+        var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
+
+        result.Should().HaveCount(1);
+
+    }
 }

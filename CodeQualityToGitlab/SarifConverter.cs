@@ -61,7 +61,14 @@ public static class SarifConverter
 
     private static string GetPath(string? pathRoot, LocationVersionOne begin)
     {
-        if (!begin.ResultFile.Uri.IsAbsoluteUri)
+        // nullability says Uri is always set, but there are tools which omit this.
+        if (begin.ResultFile.Uri == null)
+        {
+            Log.Error("There is no valid Path for the issue {@Region}, cannot create a path. Check the source sarif for missing physicalLocation.uri", begin.ResultFile.Region);
+            return "noPathInSourceSarif";
+        }
+
+        if (!begin.ResultFile.Uri!.IsAbsoluteUri)
         {
             return begin.ResultFile.Uri.ToString();
         }

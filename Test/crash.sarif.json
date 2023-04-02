@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-1.0.0.json",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "PREfast",
+        "fullName": "PREfast Code Analysis",
+        "version": "14.29.30148.0",
+        "language": "en-US"
+      },
+      "invocation": {
+        "commandLine": "cmd"
+      },
+      "files": {
+        "file:///c:/dev/app/stdafx.cpp": {
+          "hashes": [
+            {
+              "value": "72febd207eaaf204298b40f071737e0c",
+              "algorithm": "unknown"
+            }
+          ]
+        }
+      },
+      "results": []
+    },
+    {
+      "tool": {
+        "name": "PREfast",
+        "fullName": "PREfast Code Analysis",
+        "version": "14.29.30148.0",
+        "language": "en-US"
+      },
+      "invocation": {
+        "commandLine": "cmd"
+      },
+      "files": {
+        "file:///c:/dev/app/mainApp.cpp": {
+          "hashes": [
+            {
+              "value": "6f448b3da75733e7b8e86ef60c97894e",
+              "algorithm": "unknown"
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "C26451",
+          "message": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).",
+          "locations": [
+            {
+              "resultFile": {
+                "region": {
+                  "startLine": 86,
+                  "startColumn": 65,
+                  "endLine": 86,
+                  "endColumn": 77
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
