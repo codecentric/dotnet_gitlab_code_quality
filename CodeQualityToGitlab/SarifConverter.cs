@@ -19,36 +19,40 @@ public static class SarifConverter
 
         var log = JsonConvert.DeserializeObject<SarifLogVersionOne>(logContents, settings);
 
-        var cqrs = new List<CodeQuality>();
-        foreach (var result in log.Runs.SelectMany(x => x.Results))
+        var results = log.Runs
+            .SelectMany(x => x.Results)
+            .Where(r => r.SuppressionStates == SuppressionStatesVersionOne.None);
+
+		var cqrs = new List<CodeQuality>();
+		foreach (var result in results)
         {
             var begin = result.Locations?.FirstOrDefault();
 
-                if (begin == null)
-                {
-                    Log.Warning("An issue has no location, skipping: {Result}", result.Message);
-                    continue;
-                }
+            if (begin == null)
+            {
+                Log.Warning("An issue has no location, skipping: {Result}", result.Message);
+                continue;
+            }
 
-                try
+			try
+            {
+                var cqr = new CodeQuality
                 {
-                    var cqr = new CodeQuality
+                    Description = $"{result.RuleId}: {result.Message}",
+                    Severity = GetSeverity(result.Level),
+                    Location = new LocationCq
                     {
-                        Description = $"{result.RuleId}: {result.Message}",
-                        Severity = GetSeverity(result.Level),
-                        Location = new LocationCq
-                        {
-                            Path = GetPath(pathRoot, begin),
-                            Lines = new Lines { Begin = begin.ResultFile.Region.StartLine }
-                        },
-                        Fingerprint = Common.GetHash($"{result.RuleId}|{begin.ResultFile.Uri}|{begin.ResultFile.Region.StartLine}")
-                    };
-                    cqrs.Add(cqr);
-                }
-                catch (Exception e)
-                {
-                   Log.Error(e, "Could not convert {@Result}, skipping", result);
-                }
+                        Path = GetPath(pathRoot, begin),
+                        Lines = new Lines { Begin = begin.ResultFile.Region.StartLine }
+                    },
+                    Fingerprint = Common.GetHash($"{result.RuleId}|{begin.ResultFile.Uri}|{begin.ResultFile.Region.StartLine}")
+                };
+                cqrs.Add(cqr);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Could not convert {@Result}, skipping", result);
+            }
         }
 
         return cqrs;
