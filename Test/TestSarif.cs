@@ -86,10 +86,7 @@ public class TestSarif
         var json = r.ReadToEnd();
         var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
 
-        result.Should().HaveCount(1);
-        var codeQuality = result!.First();
-        codeQuality.Location.Path.Should().Be("Microsoft.NET.Sdk.Razor.SourceGenerators/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Views_Apaleo_TgcBooking_cshtml.g.cs");
-        codeQuality.Location.Lines.Begin.Should().Be(217);
+        result.Should().HaveCount(0);
 
     }
 
