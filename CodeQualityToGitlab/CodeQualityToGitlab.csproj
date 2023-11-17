@@ -2,13 +2,13 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+        <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>cq</ToolCommandName>
         <PackageOutputPath>./nupkg</PackageOutputPath>
-        <Version>0.6.0</Version>
+        <Version>0.7.0</Version>
         <Company>codecentric</Company>
         <Copyright>(c) codecentric</Copyright>
         <PackageProjectUrl>https://github.com/codecentric/dotnet_gitlab_code_quality</PackageProjectUrl>
@@ -24,14 +24,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="7.0.0" />
-      <PackageReference Include="PolySharp" Version="1.13.1">
+      <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="8.0.0" />
+      <PackageReference Include="PolySharp" Version="1.13.2">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Sarif.Sdk" Version="3.1.0" />
-      <PackageReference Include="Serilog" Version="2.12.0" />
-      <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+      <PackageReference Include="Sarif.Sdk" Version="4.3.7" />
+      <PackageReference Include="Serilog" Version="3.1.1" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="5.0.0" />
       <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     </ItemGroup>
 
