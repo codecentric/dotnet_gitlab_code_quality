@@ -14,16 +14,17 @@ public static class Merger
         {
             WriteIndented = true,
             PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters ={
-                new JsonStringEnumConverter()
-            }
+            Converters = { new JsonStringEnumConverter() }
         };
 
         foreach (var source in sources)
         {
             if (!source.Exists)
             {
-                throw new FileNotFoundException($"The file '{source.FullName}' does not exist", source.FullName);
+                throw new FileNotFoundException(
+                    $"The file '{source.FullName}' does not exist",
+                    source.FullName
+                );
             }
 
             using var f = source.OpenRead();
@@ -33,7 +34,9 @@ public static class Merger
 
                 if (data == null)
                 {
-                    throw new ArgumentNullException($"could not deserialize content of {source.FullName}");
+                    throw new ArgumentNullException(
+                        $"could not deserialize content of {source.FullName}"
+                    );
                 }
                 result.AddRange(data);
             }
@@ -45,16 +48,17 @@ public static class Merger
         }
 
         result = result.DistinctBy(x => x.Fingerprint).ToList();
-        
+
         if (bumpToMajor)
         {
-            foreach (var cqr in result
-                         .Where(cqr => cqr.Severity is Severity.minor or Severity.info))
+            foreach (
+                var cqr in result.Where(cqr => cqr.Severity is Severity.minor or Severity.info)
+            )
             {
                 cqr.Severity = Severity.major;
             }
         }
-        
+
         Common.WriteToDisk(target, result);
     }
 }

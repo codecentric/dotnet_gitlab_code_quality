@@ -22,10 +22,7 @@ internal static class Common
         {
             WriteIndented = true,
             PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters =
-            {
-                new JsonStringEnumConverter()
-            }
+            Converters = { new JsonStringEnumConverter() }
         };
         using var fileStream = File.Create(target.FullName);
         using var utf8JsonWriter = new Utf8JsonWriter(fileStream);

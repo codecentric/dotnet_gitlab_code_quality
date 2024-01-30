@@ -12,15 +12,13 @@ public class TestTransform
     {
         var target = new FileInfo(Path.GetTempFileName());
 
-        Transform.TransformAll("**/**.sarif.json", "**/*roslynator.xml", target,  null,true);
+        Transform.TransformAll("**/**.sarif.json", "**/*roslynator.xml", target, null, true);
 
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
             PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters ={
-                new JsonStringEnumConverter()
-            }
+            Converters = { new JsonStringEnumConverter() }
         };
 
         using var r = new StreamReader(target.FullName);
@@ -28,6 +26,5 @@ public class TestTransform
         var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
 
         result.Should().HaveCount(8);
-
     }
 }

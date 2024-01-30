@@ -8,12 +8,13 @@ public static class RoslynatorConverter
 {
     public static List<CodeQuality> ConvertToCodeQualityRaw(FileInfo source, string? pathRoot)
     {
-        var serializer =
-            new XmlSerializer(typeof(Roslynator));
+        var serializer = new XmlSerializer(typeof(Roslynator));
 
         var result = new List<CodeQuality>();
         using Stream reader = new FileStream(source.FullName, FileMode.Open);
-        var roslynator = (Roslynator)(serializer.Deserialize(reader) ?? throw new ArgumentException("no data"));
+        var roslynator = (Roslynator)(
+            serializer.Deserialize(reader) ?? throw new ArgumentException("no data")
+        );
         foreach (var project in roslynator.CodeAnalysis.Projects.Project)
         {
             Log.Information("Working on {ProjectName}", project.Name);
@@ -27,7 +28,7 @@ public static class RoslynatorConverter
                     Severity = GetSeverity(diagnostic.Severity),
                     Location = new LocationCq
                     {
-                        Path = GetPath(diagnostic, project, pathRoot), 
+                        Path = GetPath(diagnostic, project, pathRoot),
                         Lines = new Lines { Begin = lineNumber }
                     },
                     Fingerprint = Common.GetHash($"{project.Name}{diagnostic.Id}{lineNumber}")
@@ -39,7 +40,6 @@ public static class RoslynatorConverter
 
         return result;
     }
-    
 
     public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string? pathRoot)
     {
@@ -50,12 +50,12 @@ public static class RoslynatorConverter
     private static string GetPath(Diagnostic diagnostic, Project project, string? pathRoot)
     {
         var path = diagnostic.FilePath ?? project.FilePath;
-        
+
         if (string.IsNullOrWhiteSpace(pathRoot))
         {
             return path;
         }
-        
+
         var rv = path.Replace(pathRoot, "");
         return rv;
     }
@@ -73,13 +73,16 @@ public static class RoslynatorConverter
             "Warning" => Severity.major,
             "Error" => Severity.critical,
             "Hidden" => Severity.minor,
-            _ => throw new ArgumentOutOfRangeException(diagnosticSeverity, $"unknown: {diagnosticSeverity}")
+            _
+                => throw new ArgumentOutOfRangeException(
+                    diagnosticSeverity,
+                    $"unknown: {diagnosticSeverity}"
+                )
         };
     }
 }
 
 public class LowerCaseNamingPolicy : JsonNamingPolicy
 {
-    public override string ConvertName(string name) =>
-        name.ToLower();
+    public override string ConvertName(string name) => name.ToLower();
 }

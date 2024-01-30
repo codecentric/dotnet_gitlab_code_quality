@@ -1,9 +1,9 @@
 ﻿namespace CodeQualityToGitlab;
 
-using Serilog;
 using Microsoft.CodeAnalysis.Sarif.Readers;
 using Microsoft.CodeAnalysis.Sarif.VersionOne;
 using Newtonsoft.Json;
+using Serilog;
 
 public static class SarifConverter
 {
@@ -23,8 +23,8 @@ public static class SarifConverter
             .SelectMany(x => x.Results)
             .Where(r => r.SuppressionStates == SuppressionStatesVersionOne.None);
 
-		var cqrs = new List<CodeQuality>();
-		foreach (var result in results)
+        var cqrs = new List<CodeQuality>();
+        foreach (var result in results)
         {
             var begin = result.Locations?.FirstOrDefault();
 
@@ -34,7 +34,7 @@ public static class SarifConverter
                 continue;
             }
 
-			try
+            try
             {
                 var cqr = new CodeQuality
                 {
@@ -45,7 +45,9 @@ public static class SarifConverter
                         Path = GetPath(pathRoot, begin),
                         Lines = new Lines { Begin = begin.ResultFile.Region.StartLine }
                     },
-                    Fingerprint = Common.GetHash($"{result.RuleId}|{begin.ResultFile.Uri}|{begin.ResultFile.Region.StartLine}")
+                    Fingerprint = Common.GetHash(
+                        $"{result.RuleId}|{begin.ResultFile.Uri}|{begin.ResultFile.Region.StartLine}"
+                    )
                 };
                 cqrs.Add(cqr);
             }
@@ -57,6 +59,7 @@ public static class SarifConverter
 
         return cqrs;
     }
+
     public static void ConvertToCodeQuality(FileInfo source, FileInfo target, string? pathRoot)
     {
         var cqrs = ConvertToCodeQualityRaw(source, pathRoot);
@@ -68,7 +71,10 @@ public static class SarifConverter
         // nullability says Uri is always set, but there are tools which omit this.
         if (begin.ResultFile.Uri == null)
         {
-            Log.Error("There is no valid Path for the issue {@Region}, cannot create a path. Check the source sarif for missing physicalLocation.uri", begin.ResultFile.Region);
+            Log.Error(
+                "There is no valid Path for the issue {@Region}, cannot create a path. Check the source sarif for missing physicalLocation.uri",
+                begin.ResultFile.Region
+            );
             return "noPathInSourceSarif";
         }
 

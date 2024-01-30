@@ -6,7 +6,11 @@ namespace CodeQualityToGitlab;
 
 public static class Transform
 {
-    private static IEnumerable<CodeQuality> TransformAllRaw(string sarifGlob, string roslynatorGlob, string? pathRoot)
+    private static IEnumerable<CodeQuality> TransformAllRaw(
+        string sarifGlob,
+        string roslynatorGlob,
+        string? pathRoot
+    )
     {
         var allIssues = new List<CodeQuality>();
         Process(sarifGlob, pathRoot, allIssues, SarifConverter.ConvertToCodeQualityRaw);
@@ -15,7 +19,12 @@ public static class Transform
         return allIssues;
     }
 
-    private static void Process(string roslynatorGlob, string? pathRoot, List<CodeQuality> allIssues, Func<FileInfo, string?, List<CodeQuality>> processFunc)
+    private static void Process(
+        string roslynatorGlob,
+        string? pathRoot,
+        List<CodeQuality> allIssues,
+        Func<FileInfo, string?, List<CodeQuality>> processFunc
+    )
     {
         Matcher matcher = new();
         matcher.AddIncludePatterns(new[] { roslynatorGlob });
@@ -27,7 +36,11 @@ public static class Transform
 
         if (!result.HasMatches)
         {
-            Log.Warning("No matching files found for pattern: {Pattern} in {CurrentDir}", roslynatorGlob, currentDir.FullName);
+            Log.Warning(
+                "No matching files found for pattern: {Pattern} in {CurrentDir}",
+                roslynatorGlob,
+                currentDir.FullName
+            );
         }
 
         foreach (var match in result.Files)
@@ -39,7 +52,13 @@ public static class Transform
         }
     }
 
-    public static void TransformAll(string sarifGlob, string roslynatorGlob, FileInfo target, string? pathRoot, bool bumpToMajor)
+    public static void TransformAll(
+        string sarifGlob,
+        string roslynatorGlob,
+        FileInfo target,
+        string? pathRoot,
+        bool bumpToMajor
+    )
     {
         var cqrs = TransformAllRaw(sarifGlob, roslynatorGlob, pathRoot);
 
@@ -47,8 +66,7 @@ public static class Transform
 
         if (bumpToMajor)
         {
-            foreach (var cqr in cqrs
-                         .Where(cqr => cqr.Severity is Severity.minor or Severity.info))
+            foreach (var cqr in cqrs.Where(cqr => cqr.Severity is Severity.minor or Severity.info))
             {
                 cqr.Severity = Severity.major;
             }
