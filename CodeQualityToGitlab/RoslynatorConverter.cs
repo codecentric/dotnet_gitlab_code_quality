@@ -26,10 +26,11 @@ public static class RoslynatorConverter
                 {
                     Description = $"{diagnostic.Id}: {diagnostic.Message}",
                     Severity = GetSeverity(diagnostic.Severity),
-                    Location = new LocationCq
+                    Location = new()
                     {
                         Path = GetPath(diagnostic, project, pathRoot),
-                        Lines = new Lines { Begin = lineNumber }
+                        Lines = new()
+                        { Begin = lineNumber }
                     },
                     Fingerprint = Common.GetHash($"{project.Name}{diagnostic.Id}{lineNumber}")
                 };

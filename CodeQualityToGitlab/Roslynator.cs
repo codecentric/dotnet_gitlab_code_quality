@@ -31,7 +31,7 @@ public class Diagnostic
 public class Summary
 {
     [XmlElement(ElementName = "Diagnostic")]
-    public required List<Diagnostic> Diagnostic { get; set; } = new();
+    public required List<Diagnostic> Diagnostic { get; set; } = [];
 }
 
 [XmlRoot(ElementName = "Location")]
@@ -48,7 +48,7 @@ public class Location
 public class Diagnostics
 {
     [XmlElement(ElementName = "Diagnostic")]
-    public List<Diagnostic> Diagnostic { get; set; } = new();
+    public List<Diagnostic> Diagnostic { get; set; } = [];
 }
 
 [XmlRoot(ElementName = "Project")]
@@ -68,7 +68,7 @@ public class Project
 public class Projects
 {
     [XmlElement(ElementName = "Project")]
-    public List<Project> Project { get; set; } = new();
+    public List<Project> Project { get; set; } = [];
 }
 
 [XmlRoot(ElementName = "CodeAnalysis")]

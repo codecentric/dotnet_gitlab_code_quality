@@ -1,4 +1,5 @@
 using System.CommandLine;
+using CodeQualityToGitlab.SarifConverters;
 using Serilog;
 
 namespace CodeQualityToGitlab;

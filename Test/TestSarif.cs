@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using CodeQualityToGitlab;
+using CodeQualityToGitlab.SarifConverters;
 using FluentAssertions;
 
 namespace Test;
@@ -49,7 +50,7 @@ public class TestSarif
         var source = new FileInfo("codeanalysis.sarif2.json");
         var target = new FileInfo(Path.GetTempFileName());
 
-        SarifConverter.ConvertToCodeQuality(source, target, null);
+        SarifConverter.ConvertToCodeQuality(source, target);
 
         var options = new JsonSerializerOptions
         {
@@ -78,7 +79,7 @@ public class TestSarif
         var source = new FileInfo("codeanalysis.sarif3.json");
         var target = new FileInfo(Path.GetTempFileName());
 
-        SarifConverter.ConvertToCodeQuality(source, target, null);
+        SarifConverter.ConvertToCodeQuality(source, target);
 
         var options = new JsonSerializerOptions
         {
@@ -100,7 +101,7 @@ public class TestSarif
         var source = new FileInfo("crash.sarif.json");
         var target = new FileInfo(Path.GetTempFileName());
 
-        SarifConverter.ConvertToCodeQuality(source, target, null);
+        SarifConverter.ConvertToCodeQuality(source, target);
 
         var options = new JsonSerializerOptions
         {
@@ -114,5 +115,41 @@ public class TestSarif
         var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
 
         result.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public void TestSarif21Works()
+    {
+        var source = new FileInfo("codeanalysis.sarif21.json");
+        var target = new FileInfo(Path.GetTempFileName());
+
+        SarifConverter.ConvertToCodeQuality(source, target);
+
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
+            Converters = { new JsonStringEnumConverter() }
+        };
+
+        using var r = new StreamReader(target.FullName);
+        var json = r.ReadToEnd();
+        var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
+
+        result.Should().HaveCount(1);
+        result!.First().Should().BeEquivalentTo(new CodeQuality
+        {
+            Description = "no-unused-vars: Microsoft.CodeAnalysis.Sarif.Message",
+            Fingerprint = "75510FEE03EDAC9F5241783C86ACBFEB",
+            Severity = Severity.blocker,
+            Location = new()
+            {
+                Path = @"C:\dev\sarif\sarif-tutorials\samples\Introduction\simple-example.js",
+                Lines = new()
+                {
+                    Begin = 1
+                }
+            }
+        });
     }
 }

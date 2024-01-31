@@ -2,7 +2,6 @@
 using System.Text.Json.Serialization;
 using CodeQualityToGitlab;
 using FluentAssertions;
-using FluentAssertions.Execution;
 
 namespace Test;
 

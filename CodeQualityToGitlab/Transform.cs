@@ -1,3 +1,4 @@
+using CodeQualityToGitlab.SarifConverters;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
 using Serilog;
