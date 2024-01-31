@@ -84,3 +84,6 @@ for pipeline use a manifest:
 
 Make a PR in this repo.
 
+## Additional
+
+While dotnet only outputs Sarif 1, other projects use Sarif 2. For convenience, this library supports both Sarif versions
