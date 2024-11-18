@@ -20,9 +20,9 @@ var logContents = File.ReadAllText(source.FullName);
 
             var log = JsonConvert.DeserializeObject<SarifLogVersionOne>(logContents, settings);
 
-            var results = log.Runs
+            var results = log?.Runs
                              .SelectMany(x => x.Results)
-                             .Where(r => r.SuppressionStates == SuppressionStatesVersionOne.None);
+                             .Where(r => r.SuppressionStates == SuppressionStatesVersionOne.None) ?? [];
 
             var cqrs = new List<CodeQuality>();
             foreach (var result in results)
