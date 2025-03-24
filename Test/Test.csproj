@@ -72,6 +72,9 @@
         <Content Include="crash.sarif.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Include="codeanalysis.sarif4.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
         <None Update="codeanalysis.sarif21.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

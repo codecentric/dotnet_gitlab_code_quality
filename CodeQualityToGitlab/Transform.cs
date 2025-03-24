@@ -48,7 +48,7 @@ public static class Transform
         {
             var toTransform = match.Path;
             Log.Information("Processing: {File}", toTransform);
-            var cqrs = processFunc(new FileInfo(toTransform), pathRoot);
+            var cqrs = processFunc(new(toTransform), pathRoot);
             allIssues.AddRange(cqrs);
         }
     }

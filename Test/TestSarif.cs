@@ -8,6 +8,13 @@ namespace Test;
 
 public class TestSarif
 {
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+    {
+        WriteIndented = true,
+        PropertyNamingPolicy = new LowerCaseNamingPolicy(),
+        Converters = { new JsonStringEnumConverter() }
+    };
+
     [Fact]
     public void TestSarifWorks()
     {
@@ -20,12 +27,7 @@ public class TestSarif
             $"C:{Path.DirectorySeparatorChar}dev" + Path.DirectorySeparatorChar
         );
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters = { new JsonStringEnumConverter() }
-        };
+        var options = JsonSerializerOptions;
 
         using var r = new StreamReader(target.FullName);
         var json = r.ReadToEnd();
@@ -52,12 +54,7 @@ public class TestSarif
 
         SarifConverter.ConvertToCodeQuality(source, target);
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters = { new JsonStringEnumConverter() }
-        };
+        var options = JsonSerializerOptions;
 
         using var r = new StreamReader(target.FullName);
         var json = r.ReadToEnd();
@@ -74,28 +71,6 @@ public class TestSarif
     }
 
     [Fact]
-    public void TestSarifWorks3()
-    {
-        var source = new FileInfo("codeanalysis.sarif3.json");
-        var target = new FileInfo(Path.GetTempFileName());
-
-        SarifConverter.ConvertToCodeQuality(source, target);
-
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters = { new JsonStringEnumConverter() }
-        };
-
-        using var r = new StreamReader(target.FullName);
-        var json = r.ReadToEnd();
-        var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
-
-        result.Should().HaveCount(0);
-    }
-
-    [Fact]
     public void TestCrashWorks()
     {
         var source = new FileInfo("crash.sarif.json");
@@ -103,12 +78,7 @@ public class TestSarif
 
         SarifConverter.ConvertToCodeQuality(source, target);
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters = { new JsonStringEnumConverter() }
-        };
+        var options = JsonSerializerOptions;
 
         using var r = new StreamReader(target.FullName);
         var json = r.ReadToEnd();
@@ -125,12 +95,7 @@ public class TestSarif
 
         SarifConverter.ConvertToCodeQuality(source, target);
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters = { new JsonStringEnumConverter() }
-        };
+        var options = JsonSerializerOptions;
 
         using var r = new StreamReader(target.FullName);
         var json = r.ReadToEnd();

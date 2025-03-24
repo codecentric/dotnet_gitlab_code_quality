@@ -27,4 +27,25 @@ public class TestTransform
 
         result.Should().HaveCount(8);
     }
+
+    [Fact]
+    public void TestTransformCreatesExpectedPath()
+    {
+        var target = new FileInfo(Path.GetTempFileName());
+
+        Transform.TransformAll("codeanalysis.sarif4.json", "", target, null, true);
+
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
+            Converters = { new JsonStringEnumConverter() }
+        };
+
+        using var r = new StreamReader(target.FullName);
+        var json = r.ReadToEnd();
+        var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
+
+        result.Should().HaveCount(8);
+    }
 }

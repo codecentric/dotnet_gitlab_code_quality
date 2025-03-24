@@ -1,0 +1,394 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Compiler",
+        "version": "4.8.0.0",
+        "fileVersion": "4.8.0-7.24574.2 (4ff64493)",
+        "semanticVersion": "4.8.0"
+      },
+      "results": [
+        {
+          "ruleId": "MA0048",
+          "level": "warning",
+          "message": "File name must match type name",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 24,
+                  "endLine": 12,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "warning",
+          "message": "Member 'Note' does not access instance data and can be marked as static",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 27,
+                  "endLine": 21,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "warning",
+          "message": "Member 'StockCount' does not access instance data and can be marked as static",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 69,
+                  "startColumn": 27,
+                  "endLine": 69,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "warning",
+          "message": "Member 'QualityNotification' does not access instance data and can be marked as static",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 129,
+                  "startColumn": 27,
+                  "endLine": 129,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "warning",
+          "message": "Member 'Document' does not access instance data and can be marked as static",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 194,
+                  "startColumn": 27,
+                  "endLine": 194,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "warning",
+          "message": "Member 'Asn' does not access instance data and can be marked as static",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 236,
+                  "startColumn": 27,
+                  "endLine": 236,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "warning",
+          "message": "Member 'PriceChange' does not access instance data and can be marked as static",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 260,
+                  "startColumn": 27,
+                  "endLine": 260,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "warning",
+          "message": "Member 'OrderPlan' does not access instance data and can be marked as static",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 327,
+                  "startColumn": 27,
+                  "endLine": 327,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "warning",
+          "message": "Member 'Forecast' does not access instance data and can be marked as static",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 339,
+                  "startColumn": 27,
+                  "endLine": 339,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "warning",
+          "message": "Member 'GiftCard' does not access instance data and can be marked as static",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 361,
+                  "startColumn": 27,
+                  "endLine": 361,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1852",
+          "level": "warning",
+          "message": "Type 'ForecastArgs' can be sealed because it has no subtypes in its containing assembly and is not externally visible",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 348,
+                  "startColumn": 22,
+                  "endLine": 348,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1852",
+          "level": "warning",
+          "message": "Type 'OrderPlanArgs' can be sealed because it has no subtypes in its containing assembly and is not externally visible",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 336,
+                  "startColumn": 22,
+                  "endLine": 336,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "MA0053",
+          "level": "note",
+          "message": "Make class sealed",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 348,
+                  "startColumn": 22,
+                  "endLine": 348,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "MA0053",
+          "level": "note",
+          "message": "Make class sealed",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///builds/folder/backend/SR.CLI/Program_Generate.cs",
+                "region": {
+                  "startLine": 336,
+                  "startColumn": 22,
+                  "endLine": 336,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CA1822": {
+          "id": "CA1822",
+          "shortDescription": "Mark members as static",
+          "fullDescription": "Members that do not access instance data or call instance methods can be marked as static. After you mark the methods as static, the compiler will emit nonvirtual call sites to these members. This can give you a measurable performance gain for performance-sensitive code.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1822",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "PortedFromFxCop",
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CA1852": {
+          "id": "CA1852",
+          "shortDescription": "Seal internal types",
+          "fullDescription": "When a type is not accessible outside its assembly and has no subtypes within its containing assembly, it can be safely sealed. Sealing types can improve performance.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1852",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnabledRuleInAggressiveMode",
+              "CompilationEnd"
+            ]
+          }
+        },
+        "MA0048": {
+          "id": "MA0048",
+          "shortDescription": "File name must match type name",
+          "defaultLevel": "warning",
+          "helpUri": "https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0048.md",
+          "properties": {
+            "category": "Design",
+            "isEnabledByDefault": true
+          }
+        },
+        "MA0053": {
+          "id": "MA0053",
+          "shortDescription": "Make class sealed",
+          "defaultLevel": "note",
+          "helpUri": "https://github.com/meziantou/Meziantou.Analyzer/blob/main/docs/Rules/MA0053.md",
+          "properties": {
+            "category": "Design",
+            "isEnabledByDefault": true
+          }
+        }
+      }
+    }
+  ]
+}
