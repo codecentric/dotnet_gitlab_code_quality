@@ -27,7 +27,7 @@ internal static class Program
             description: "The name root of the repository. Gitlab requires Code Quality issues to contain paths relative to the repository, "
                 + "but the tools report them as absolute file paths. "
                 + "Everything given in with this option will be removed. E.g. root is 'c:/dev' and the file name is something like 'c:/dev/myrepo/file.cs' it will transformed to 'myrepo/file.cs'. Can often be omitted. ",
-            getDefaultValue: () => null
+            getDefaultValue: Directory.GetCurrentDirectory
         );
 
         var rootCommand = new RootCommand("Tool to convert Dotnet-Formats to Gitlab code quality");
