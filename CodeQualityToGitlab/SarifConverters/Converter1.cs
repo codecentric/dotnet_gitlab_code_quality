@@ -44,7 +44,7 @@ public class Converter1(FileInfo source, string? pathRoot)
                     Severity = GetSeverity(result.Level),
                     Location = new()
                     {
-                        Path = GetPath(pathRoot, begin),
+                        Path = GetPathOld(pathRoot, begin),
                         Lines = new() { Begin = begin.ResultFile.Region.StartLine }
                     },
                     Fingerprint = Common.GetHash(
@@ -62,14 +62,14 @@ public class Converter1(FileInfo source, string? pathRoot)
         return cqrs;
     }
 
-    private static string GetPath(string? pathRoot, LocationVersionOne begin)
+    private static string GetPathOld(string? pathRoot, LocationVersionOne begin)
     {
         // nullability says Uri is always set, but there are tools which omit this.
         if (begin.ResultFile.Uri == null)
         {
             Log.Error(
-                "There is no valid Path for the issue {@Region}, cannot create a path. Check the source sarif for missing physicalLocation.uri",
-                begin.ResultFile.Region
+            "There is no valid Path for the issue {@Region}, cannot create a path. Check the source sarif for missing physicalLocation.uri",
+            begin.ResultFile.Region
             );
             return "noPathInSourceSarif";
         }
@@ -81,20 +81,12 @@ public class Converter1(FileInfo source, string? pathRoot)
 
         if (string.IsNullOrWhiteSpace(pathRoot))
         {
-            return NormalizeSeparators(begin.ResultFile.Uri.LocalPath.Replace(@"\\", @"\"));
+            return begin.ResultFile.Uri.LocalPath.Replace("//", "\\");
         }
-
-        var uri = GetUri(pathRoot);
-        var absolutePath = begin.ResultFile.Uri.LocalPath;
-        var rootPath = uri.LocalPath;
-
-        if (absolutePath.StartsWith(rootPath))
-        {
-            return NormalizeSeparators(absolutePath[rootPath.Length..]);
-        }
-
-        return NormalizeSeparators(begin.ResultFile.Uri.MakeRelativeUri(uri).ToString());
+        var rootUri = GetUri(pathRoot);
+        return rootUri.MakeRelativeUri(begin.ResultFile.Uri).ToString().Replace("//", "\\");
     }
+
 
     private static Uri GetUri(string pathRoot)
     {

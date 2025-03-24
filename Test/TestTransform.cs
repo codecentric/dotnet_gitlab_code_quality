@@ -31,11 +31,11 @@ public class TestTransform
     }
 
     [Fact]
-    public void TestTransformCreatesExpectedPath()
+    public void TestTHandlesDotsInPathsForSarif1()
     {
         var target = new FileInfo(Path.GetTempFileName());
 
-        Transform.TransformAll("codeanalysis.sarif4.json", "", target, @"/builds/39753701/backend", true);
+        Transform.TransformAll("codeanalysis.sarif4.json", "", target, "/builds/folder/backend/", true);
 
         var options = JsonSerializerOptions;
 
@@ -43,6 +43,9 @@ public class TestTransform
         var json = r.ReadToEnd();
         var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
 
-        result.Should().HaveCount(8);
+        result.Should().NotBeNull();
+        result!.First().Location.Path.Should().Contain("SR.CLI");
+
+        result.Should().HaveCount(4);
     }
 }
