@@ -28,7 +28,7 @@ public static class Transform
     )
     {
         Matcher matcher = new();
-        matcher.AddIncludePatterns(new[] { roslynatorGlob });
+        matcher.AddIncludePatterns([roslynatorGlob]);
 
         const string searchDirectory = ".";
 

@@ -84,7 +84,7 @@ public class Converter1(FileInfo source, string? pathRoot)
             return NormalizeSeparators(begin.ResultFile.Uri.LocalPath.Replace(@"\\", @"\"));
         }
 
-        var uri = new Uri(pathRoot);
+        var uri = GetUri(pathRoot);
         var absolutePath = begin.ResultFile.Uri.LocalPath;
         var rootPath = uri.LocalPath;
 
@@ -94,6 +94,16 @@ public class Converter1(FileInfo source, string? pathRoot)
         }
 
         return NormalizeSeparators(begin.ResultFile.Uri.MakeRelativeUri(uri).ToString());
+    }
+
+    private static Uri GetUri(string pathRoot)
+    {
+        if (Path.IsPathRooted(pathRoot))
+        {
+            return new(new Uri("file://"),pathRoot);
+        }
+
+        return new(pathRoot);
     }
 
     private static Severity GetSeverity(ResultLevelVersionOne resultLevel)

@@ -7,6 +7,13 @@ namespace Test;
 
 public class TestTransform
 {
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
+    {
+        WriteIndented = true,
+        PropertyNamingPolicy = new LowerCaseNamingPolicy(),
+        Converters = { new JsonStringEnumConverter() }
+    };
+
     [Fact]
     public void TestTransformAllWorks()
     {
@@ -14,12 +21,7 @@ public class TestTransform
 
         Transform.TransformAll("**/**.sarif.json", "**/*roslynator.xml", target, null, true);
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters = { new JsonStringEnumConverter() }
-        };
+        var options = JsonSerializerOptions;
 
         using var r = new StreamReader(target.FullName);
         var json = r.ReadToEnd();
@@ -33,14 +35,9 @@ public class TestTransform
     {
         var target = new FileInfo(Path.GetTempFileName());
 
-        Transform.TransformAll("codeanalysis.sarif4.json", "", target, null, true);
+        Transform.TransformAll("codeanalysis.sarif4.json", "", target, @"/builds/39753701/backend", true);
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            Converters = { new JsonStringEnumConverter() }
-        };
+        var options = JsonSerializerOptions;
 
         using var r = new StreamReader(target.FullName);
         var json = r.ReadToEnd();
