@@ -81,10 +81,19 @@ var logContents = File.ReadAllText(source.FullName);
 
         if (string.IsNullOrWhiteSpace(pathRoot))
         {
-            return begin.ResultFile.Uri.LocalPath.Replace("//", "\\");
+            return NormalizeSeparators(begin.ResultFile.Uri.LocalPath.Replace(@"\\", @"\"));
         }
+
         var uri = new Uri(pathRoot);
-        return uri.MakeRelativeUri(begin.ResultFile.Uri).ToString().Replace("//", "\\");
+        var absolutePath = begin.ResultFile.Uri.LocalPath;
+        var rootPath = uri.LocalPath;
+
+        if (absolutePath.StartsWith(rootPath))
+        {
+            return NormalizeSeparators(absolutePath[rootPath.Length..]);
+        }
+
+        return NormalizeSeparators(begin.ResultFile.Uri.MakeRelativeUri(uri).ToString());
     }
 
     private static Severity GetSeverity(ResultLevelVersionOne resultLevel)
@@ -99,5 +108,10 @@ var logContents = File.ReadAllText(source.FullName);
             ResultLevelVersionOne.Error => Severity.blocker,
             _ => throw new ArgumentOutOfRangeException(nameof(resultLevel), resultLevel, null)
         };
+    }
+
+    private static string NormalizeSeparators(string source)
+    {
+        return source.Replace(@"\\", @"\").Replace("//", @"\");
     }
 }
