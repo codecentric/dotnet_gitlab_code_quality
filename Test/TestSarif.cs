@@ -137,19 +137,22 @@ public class TestSarif
         var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
 
         result.Should().HaveCount(1);
-        result!.First().Should().BeEquivalentTo(new CodeQuality
-        {
-            Description = "no-unused-vars: Microsoft.CodeAnalysis.Sarif.Message",
-            Fingerprint = "75510FEE03EDAC9F5241783C86ACBFEB",
-            Severity = Severity.blocker,
-            Location = new()
-            {
-                Path = @"C:\dev\sarif\sarif-tutorials\samples\Introduction\simple-example.js",
-                Lines = new()
+        result!
+            .First()
+            .Should()
+            .BeEquivalentTo(
+                new CodeQuality
                 {
-                    Begin = 1
+                    Description = "no-unused-vars: Microsoft.CodeAnalysis.Sarif.Message",
+                    Fingerprint = "75510FEE03EDAC9F5241783C86ACBFEB",
+                    Severity = Severity.blocker,
+                    Location = new()
+                    {
+                        Path =
+                            @"C:\dev\sarif\sarif-tutorials\samples\Introduction\simple-example.js",
+                        Lines = new() { Begin = 1 }
+                    }
                 }
-            }
-        });
+            );
     }
 }

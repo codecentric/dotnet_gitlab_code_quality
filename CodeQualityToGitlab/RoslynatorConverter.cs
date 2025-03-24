@@ -29,8 +29,7 @@ public static class RoslynatorConverter
                     Location = new()
                     {
                         Path = GetPath(diagnostic, project, pathRoot),
-                        Lines = new()
-                        { Begin = lineNumber }
+                        Lines = new() { Begin = lineNumber }
                     },
                     Fingerprint = Common.GetHash($"{project.Name}{diagnostic.Id}{lineNumber}")
                 };

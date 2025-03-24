@@ -12,8 +12,8 @@ public class Converter2(FileInfo source, string? pathRoot)
         var log = SarifLog.Load(source.FullName);
 
         var results = log.Runs
-                         .SelectMany(x => x.Results)
-                         .Where(r => r.Suppressions == null || r.Suppressions.Any());
+            .SelectMany(x => x.Results)
+            .Where(r => r.Suppressions == null || r.Suppressions.Any());
 
         var cqrs = new List<CodeQuality>();
         foreach (var result in results)
@@ -36,11 +36,10 @@ public class Converter2(FileInfo source, string? pathRoot)
                     Location = new()
                     {
                         Path = GetPath(pathRoot, begin),
-                        Lines = new()
-                        { Begin = startLine }
+                        Lines = new() { Begin = startLine }
                     },
                     Fingerprint = Common.GetHash(
-                    $"{result.RuleId}|{begin.PhysicalLocation.ArtifactLocation.Uri}|{startLine}"
+                        $"{result.RuleId}|{begin.PhysicalLocation.ArtifactLocation.Uri}|{startLine}"
                     )
                 };
                 cqrs.Add(cqr);
@@ -61,8 +60,8 @@ public class Converter2(FileInfo source, string? pathRoot)
         if (artifactLocationUri == null)
         {
             Log.Error(
-            "There is no valid Path for the issue {@Region}, cannot create a path. Check the source sarif for missing physicalLocation.ArtifactLocation.uri",
-            begin.PhysicalLocation.ArtifactLocation
+                "There is no valid Path for the issue {@Region}, cannot create a path. Check the source sarif for missing physicalLocation.ArtifactLocation.uri",
+                begin.PhysicalLocation.ArtifactLocation
             );
             return "noPathInSourceSarif";
         }
