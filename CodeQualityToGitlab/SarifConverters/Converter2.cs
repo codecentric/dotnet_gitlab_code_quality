@@ -22,7 +22,7 @@ public class Converter2(FileInfo source, string? pathRoot)
 
             if (begin == null)
             {
-                Log.Warning("An issue has no location, skipping: {@Result}", result.Message);
+                Log.Warning("An issue has no location, skipping: {@Result}", result.Message.Text);
                 continue;
             }
 
@@ -31,7 +31,7 @@ public class Converter2(FileInfo source, string? pathRoot)
                 var startLine = begin.PhysicalLocation.Region.StartLine;
                 var cqr = new CodeQuality
                 {
-                    Description = $"{result.RuleId}: {result.Message}",
+                    Description = $"{result.RuleId}: {result.Message.Text}",
                     Severity = GetSeverity(result.Level),
                     Location = new()
                     {
