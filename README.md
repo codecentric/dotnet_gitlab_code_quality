@@ -2,7 +2,7 @@
 
 ## What does it do?
 
-Gitlabs Code Quality Issue format is different from the format used by .Net to report code quality issues (Sarif 1.0 as of the time of writing). Reporting code quality issues in Gitlab is therefore not really possible.
+Gitlabs Code Quality Issue format is different from the format used by DotNet to report code quality issues (Sarif 1.0 or 2.0 as of the time of writing). Reporting code quality issues in Gitlab is therefore not really possible.
 This tool aims to rectify this problem by offering three functions:
 
 - Convert Microsoft Build time code quality issues into Gitlabs format
@@ -29,9 +29,9 @@ For merging:
 dotnet tool run cq merge target.json source1.json source2.json
 ```
 
-Note the third argument, it is used to report only the path relative to the repository, not the full local path.
-Now you can upload your file in Gitlab und you SHOULD be able to see it in the merge view
-Gotcha: Gitlab compares issues to the target of the merge. When there are no issues in the target branch, it will not display anything. So please run this tool on your main branch first then open a merge request to see it in the Gitlab UI.
+Note the third argument – it is used to report only the path relative to the repository, not the full local path.
+Now you can upload your file in Gitlab, und you SHOULD be able to see it in the merge view
+Gotcha: Gitlab compares issues to the target of the merge. When there are no issues in the target branch, it will not display anything. So please run this tool on your main branch first, then open a merge request to see it in the Gitlab UI.
 
 All in one:
 
@@ -77,8 +77,12 @@ For interactive usage
 dotnet tool install --global CodeQualityToGitlab --version 0.1.1
 ```
 
-for pipeline use a manifest:
+For pipeline use a local tool manifest and commit that
 
+```shell
+dotnet new tool-manifest
+dotnet tool install --local CodeQualityToGitlab
+```
 
 ## How to contribute?
 
@@ -87,3 +91,18 @@ Make a PR in this repo.
 ## Additional
 
 While dotnet only outputs Sarif 1, other projects use Sarif 2. For convenience, this library supports both Sarif versions
+
+## Changelog
+
+### 2.1.0
+
+- Fixes Sarif 2.0 error message - thanks  mcserep
+- Supports Dotnet 10
+
+## Contributors
+
+- Thanks mcserep!
+- Thanks davidmehren
+- Thanks JonasSchubert
+- Thanks mpidash
+- Thanks dannyvolders
