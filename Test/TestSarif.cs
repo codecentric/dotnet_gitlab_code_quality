@@ -12,7 +12,7 @@ public class TestSarif
     {
         WriteIndented = true,
         PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-        Converters = { new JsonStringEnumConverter() }
+        Converters = { new JsonStringEnumConverter() },
     };
 
     [Fact]
@@ -36,8 +36,7 @@ public class TestSarif
         result.Should().HaveCount(1);
         var codeQuality = result!.First();
         codeQuality
-            .Description
-            .Should()
+            .Description.Should()
             .Be(
                 "CS8618: Non-nullable property 'Name' must contain a non-null value when exiting constructor. Consider declaring the property as nullable."
             );
@@ -63,9 +62,7 @@ public class TestSarif
         result.Should().HaveCount(7);
         var codeQuality = result!.First();
         codeQuality
-            .Location
-            .Path
-            .Should()
+            .Location.Path.Should()
             .Be("/builds/christian.sauer/net_examle/ClassLibrary1/Class1.cs");
         codeQuality.Location.Lines.Begin.Should().Be(26);
     }
@@ -108,15 +105,15 @@ public class TestSarif
             .BeEquivalentTo(
                 new CodeQuality
                 {
-                    Description = "no-unused-vars: Microsoft.CodeAnalysis.Sarif.Message",
+                    Description = "no-unused-vars: 'x' is assigned a value but never used.",
                     Fingerprint = "75510FEE03EDAC9F5241783C86ACBFEB",
                     Severity = Severity.blocker,
                     Location = new()
                     {
                         Path =
                             @"C:\dev\sarif\sarif-tutorials\samples\Introduction\simple-example.js",
-                        Lines = new() { Begin = 1 }
-                    }
+                        Lines = new() { Begin = 1 },
+                    },
                 }
             );
     }
