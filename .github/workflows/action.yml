@@ -13,6 +13,7 @@ jobs:
           dotnet-version: |
             8
             9
+            10
       - name: Install dependencies
         run: dotnet restore
       - name: Build
