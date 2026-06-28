@@ -117,4 +117,21 @@ public class TestSarif
                 }
             );
     }
+
+    [Fact]
+    public void TestHandlesSuppressionForSarif21()
+    {
+        var source = new FileInfo("codeanalysis.sarif21suppression.json");
+        var target = new FileInfo(Path.GetTempFileName());
+
+        SarifConverter.ConvertToCodeQuality(source, target);
+
+        var options = JsonSerializerOptions;
+
+        using var r = new StreamReader(target.FullName);
+        var json = r.ReadToEnd();
+        var result = JsonSerializer.Deserialize<List<CodeQuality>>(json, options);
+
+        result.Should().BeEmpty();
+    }
 }

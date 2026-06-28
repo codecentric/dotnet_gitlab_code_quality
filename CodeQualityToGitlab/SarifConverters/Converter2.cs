@@ -13,7 +13,7 @@ public class Converter2(FileInfo source, string? pathRoot)
 
         var results = log.Runs
             .SelectMany(x => x.Results)
-            .Where(r => r.Suppressions == null || r.Suppressions.Any());
+            .Where(r => r.Suppressions == null || r.Suppressions.Count == 0);
 
         var cqrs = new List<CodeQuality>();
         foreach (var result in results)

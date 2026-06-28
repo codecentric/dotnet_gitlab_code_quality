@@ -78,6 +78,10 @@
         <None Update="codeanalysis.sarif21.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Remove="codeanalysis.sarif21suppression.json" />
+        <Content Include="codeanalysis.sarif21suppression.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>
